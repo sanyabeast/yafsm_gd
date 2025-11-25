@@ -1,27 +1,26 @@
 @tool
 extends EditorPlugin
 
+
 const StateMachineEditor = preload("scenes/StateMachineEditor.tscn")
 const TransitionInspector = preload("scenes/transition_editors/TransitionInspector.gd")
 const StateInspector = preload("scenes/state_nodes/StateInspector.gd")
-
 const StackPlayerIcon = preload("assets/icons/stack_player_icon.png")
 const StateMachinePlayerIcon = preload("assets/icons/state_machine_player_icon.png")
 
-var state_machine_editor = StateMachineEditor.instantiate()
-var transition_inspector = TransitionInspector.new()
-var state_inspector = StateInspector.new()
-
-var focused_object:  # Can be StateMachine/StateMachinePlayer
+var state_machine_editor: Control = StateMachineEditor.instantiate()
+var transition_inspector: EditorInspectorPlugin = TransitionInspector.new()
+var state_inspector: EditorInspectorPlugin = StateInspector.new()
+var focused_object: Variant:
 	set = set_focused_object
-var editor_selection
+var editor_selection: EditorSelection
+var _handled_and_ready_to_edit: bool = false
 
-var _handled_and_ready_to_edit = false  # forces _handles => _edit flow
 
-func _enter_tree():
+func _enter_tree() -> void:
 	editor_selection = get_editor_interface().get_selection()
 	editor_selection.selection_changed.connect(_on_EditorSelection_selection_changed)
-	var editor_base_control = get_editor_interface().get_base_control()
+	var editor_base_control: Control = get_editor_interface().get_base_control()
 	add_custom_type("StackPlayer", "Node", StackPlayer, StackPlayerIcon)
 	add_custom_type("StateMachinePlayer", "Node", StateMachinePlayer, StateMachinePlayerIcon)
 	
@@ -41,16 +40,16 @@ func _enter_tree():
 	state_machine_editor.node_selected.connect(_on_StateMachineEditor_node_selected)
 	state_machine_editor.node_deselected.connect(_on_StateMachineEditor_node_deselected)
 	state_machine_editor.debug_mode_changed.connect(_on_StateMachineEditor_debug_mode_changed)
-	# Force anti-alias for default font, so rotated text will looks smoother
-	var font = editor_base_control.get_theme_font("main", "EditorFonts")
-	# font.use_filter = true
+
+	var font: Font = editor_base_control.get_theme_font("main", "EditorFonts")
 
 	transition_inspector.undo_redo = get_undo_redo()
 	transition_inspector.transition_icon = editor_base_control.get_theme_icon("ToolConnect", "EditorIcons")
 	add_inspector_plugin(transition_inspector)
 	add_inspector_plugin(state_inspector)
 
-func _exit_tree():
+
+func _exit_tree() -> void:
 	remove_custom_type("StackPlayer")
 	remove_custom_type("StateMachinePlayer")
 
@@ -61,10 +60,11 @@ func _exit_tree():
 		hide_state_machine_editor()
 		state_machine_editor.queue_free()
 
-func _handles(object):
+
+func _handles(object: Object) -> bool:
 	if object is StateMachine:
-		_handled_and_ready_to_edit = true  # this should not be necessary, but it seemingly is (Godot 4.0-rc1)
-		return true  # when return true from _handles, _edit can proceed.
+		_handled_and_ready_to_edit = true
+		return true
 	if object is StateMachinePlayer:
 		if object.get_class() == "EditorDebuggerRemoteObjects":
 			set_focused_object(object)
@@ -72,39 +72,43 @@ func _handles(object):
 			return false
 	return false
 
-func _edit(object):
-	if _handled_and_ready_to_edit:  # Forces _handles => _edit flow. This should not be necessary, but it seemingly is (Godot 4.0-rc1)
+
+func _edit(object: Object) -> void:
+	if _handled_and_ready_to_edit:
 		_handled_and_ready_to_edit = false
 		set_focused_object(object)
 
-func show_state_machine_editor():
+
+func show_state_machine_editor() -> void:
 	if focused_object and state_machine_editor:
 		if not state_machine_editor.is_inside_tree():
 			add_control_to_bottom_panel(state_machine_editor, "StateMachine")
 		make_bottom_panel_item_visible(state_machine_editor)
 
-func hide_state_machine_editor():
+
+func hide_state_machine_editor() -> void:
 	if state_machine_editor.is_inside_tree():
 		state_machine_editor.state_machine = null
 		remove_control_from_bottom_panel(state_machine_editor)
 
-func _on_EditorSelection_selection_changed():
+
+func _on_EditorSelection_selection_changed() -> void:
 	if editor_selection == null:
 		return
 	
-	var selected_nodes = editor_selection.get_selected_nodes()
+	var selected_nodes: Array = editor_selection.get_selected_nodes()
 	if selected_nodes.size() == 1:
-		var selected_node = selected_nodes[0]
+		var selected_node: Node = selected_nodes[0]
 		if selected_node is StateMachinePlayer:
 			set_focused_object(selected_node)
 			return
 	set_focused_object(null)
 
-func _on_focused_object_changed(new_obj):
+
+func _on_focused_object_changed(new_obj: Variant) -> void:
 	if new_obj:
-		# Must be shown first, otherwise StateMachineEditor can't execute ui action as it is not added to scene tree
 		show_state_machine_editor()
-		var state_machine
+		var state_machine: Variant
 		if focused_object is StateMachinePlayer:
 			if focused_object.get_class() == "EditorDebuggerRemoteObjects":
 				state_machine = focused_object.get("Members/state_machine")
@@ -120,32 +124,35 @@ func _on_focused_object_changed(new_obj):
 	else:
 		hide_state_machine_editor()
 
-func _on_inspector_changed(property):
-	#get_editor_interface().get_inspector().refresh()
+
+func _on_inspector_changed(property: String) -> void:
 	notify_property_list_changed()
 
-func _on_StateMachineEditor_node_selected(node):
-	var to_inspect
+
+func _on_StateMachineEditor_node_selected(node: Node) -> void:
+	var to_inspect: Variant
 	if "state" in node:
-		if node.state is StateMachine: # Ignore, inspect state machine will trigger edit()
+		if node.state is StateMachine:
 			return
 		to_inspect = node.state
 	elif "transition" in node:
 		to_inspect = node.transition
 	get_editor_interface().inspect_object(to_inspect)
 
-func _on_StateMachineEditor_node_deselected(node):
-	# editor_selection.remove_node(node)
+
+func _on_StateMachineEditor_node_deselected(node: Node) -> void:
 	get_editor_interface().inspect_object(state_machine_editor.state_machine)
 
-func _on_StateMachineEditor_debug_mode_changed(new_debug_mode):
+
+func _on_StateMachineEditor_debug_mode_changed(new_debug_mode: bool) -> void:
 	if not new_debug_mode:
 		state_machine_editor.debug_mode = false
 		state_machine_editor.state_machine_player = null
 		set_focused_object(null)
 		hide_state_machine_editor()
 
-func set_focused_object(obj):
+
+func set_focused_object(obj: Variant) -> void:
 	if focused_object != obj:
 		focused_object = obj
 		_on_focused_object_changed(obj)
