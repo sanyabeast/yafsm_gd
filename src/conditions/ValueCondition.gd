@@ -2,10 +2,11 @@
 extends Condition
 class_name ValueCondition
 
-signal comparation_changed(new_comparation) # Comparation hanged
-signal value_changed(new_value) # Value changed
 
-# Enum to define how to compare value
+signal comparation_changed(new_comparation: Comparation)
+signal value_changed(new_value: Variant)
+
+
 enum Comparation {
 	EQUAL,
 	INEQUAL,
@@ -14,8 +15,8 @@ enum Comparation {
 	GREATER_OR_EQUAL,
 	LESSER_OR_EQUAL
 }
-# Comparation symbols arranged in order as enum Comparation
-const COMPARATION_SYMBOLS = [
+
+const COMPARATION_SYMBOLS: Array = [
 	"==",
 	"!=",
 	">",
@@ -27,30 +28,32 @@ const COMPARATION_SYMBOLS = [
 @export var comparation: Comparation = Comparation.EQUAL:
 	set = set_comparation
 
-func _init(p_name="", p_comparation=Comparation.EQUAL):
+
+func _init(p_name: String = "", p_comparation: Comparation = Comparation.EQUAL) -> void:
 	super._init(p_name)
 	comparation = p_comparation
 
-func set_comparation(c):
+
+func set_comparation(c: Comparation) -> void:
 	if comparation != c:
 		comparation = c
 		emit_signal("comparation_changed", c)
 		emit_signal("display_string_changed", display_string())
 
-# To be overrided by child class and emit value_changed signal
-func set_value(v):
+
+func set_value(v: Variant) -> void:
 	pass
 
-# To be overrided by child class, as it is impossible to export(Variant)
-func get_value():
-	pass
 
-# To be used in _to_string()
-func get_value_string():
+func get_value() -> Variant:
+	return null
+
+
+func get_value_string() -> String:
 	return get_value()
 
-# Compare value against this condition, return true if succeeded
-func compare(v):
+
+func compare(v: Variant) -> bool:
 	if v == null:
 		return false
 
@@ -67,7 +70,8 @@ func compare(v):
 			return v >= get_value()
 		Comparation.LESSER_OR_EQUAL:
 			return v <= get_value()
+	return false
 
-# Return human readable display string, for example, "condition_name == True"
-func display_string():
+
+func display_string() -> String:
 	return "%s %s %s" % [super.display_string(), COMPARATION_SYMBOLS[comparation], get_value_string()]
