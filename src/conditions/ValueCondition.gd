@@ -50,7 +50,7 @@ func get_value() -> Variant:
 
 
 func get_value_string() -> String:
-	return get_value()
+	return str(get_value())
 
 
 func compare(v: Variant) -> bool:
