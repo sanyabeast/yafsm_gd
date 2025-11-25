@@ -38,7 +38,7 @@ func pivot_at_line_start() -> void:
 	pivot_offset.y = size.y / 2.0
 
 
-func join(from: Vector2, to: Vector2, offset: float = 0.0, clip_rects: Array = []) -> void:
+func join(from: Vector2, to: Vector2, offset: Variant = 0.0, clip_rects: Array = []) -> void:
 	var perp_dir: Vector2 = from.direction_to(to).rotated(deg_to_rad(90.0)).normalized()
 	from -= perp_dir * offset
 	to -= perp_dir * offset
