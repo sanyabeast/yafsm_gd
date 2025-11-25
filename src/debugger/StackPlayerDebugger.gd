@@ -1,17 +1,20 @@
 @tool
 extends Control
+
+
 const StackPlayer = preload("../StackPlayer.gd")
 const StackItem = preload("StackItem.tscn")
 
-@onready var Stack = $MarginContainer/Stack
+@onready var Stack: VBoxContainer = $MarginContainer/Stack
 
 
-func _get_configuration_warning():
+func _get_configuration_warnings() -> PackedStringArray:
 	if not (get_parent() is StackPlayer):
-		return "Debugger must be child of StackPlayer"
-	return ""
+		return PackedStringArray(["Debugger must be child of StackPlayer"])
+	return PackedStringArray()
 
-func _ready():
+
+func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 
@@ -19,32 +22,34 @@ func _ready():
 	get_parent().popped.connect(_on_StackPlayer_popped)
 	sync_stack()
 
-# Override to handle custom object presentation
-func _on_set_label(label, obj):
-	label.text = obj
 
-func _on_StackPlayer_pushed(to):
-	var stack_item = StackItem.instantiate()
+func _on_set_label(label: Label, obj: Variant) -> void:
+	label.text = str(obj)
+
+
+func _on_StackPlayer_pushed(to: Variant) -> void:
+	var stack_item: Control = StackItem.instantiate()
 	_on_set_label(stack_item.get_node("Label"), to)
 	Stack.add_child(stack_item)
 	Stack.move_child(stack_item, 0)
 
-func _on_StackPlayer_popped(from):
-	# Sync whole stack instead of just popping top item, as ResetEventTrigger passed to reset() may be varied
+
+func _on_StackPlayer_popped(from: Variant) -> void:
 	sync_stack()
 
-func sync_stack():
-	var diff = Stack.get_child_count() - get_parent().stack.size()
+
+func sync_stack() -> void:
+	var diff: int = Stack.get_child_count() - get_parent().stack.size()
 	for i in abs(diff):
 		if diff < 0:
-			var stack_item = StackItem.instantiate()
+			var stack_item: Control = StackItem.instantiate()
 			Stack.add_child(stack_item)
 		else:
-			var child = Stack.get_child(0)
+			var child: Node = Stack.get_child(0)
 			Stack.remove_child(child)
 			child.queue_free()
-	var stack = get_parent().stack
+	var stack: Array = get_parent().stack
 	for i in stack.size():
-		var obj = stack[stack.size()-1 - i] # Descending order, to list from bottom to top in VBoxContainer
-		var child = Stack.get_child(i)
+		var obj: Variant = stack[stack.size()-1 - i]
+		var child: Node = Stack.get_child(i)
 		_on_set_label(child.get_node("Label"), obj)
