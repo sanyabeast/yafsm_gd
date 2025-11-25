@@ -1,29 +1,30 @@
 @tool
 extends "res://addons/yafsm/scenes/flowchart/FlowChartNode.gd"
+
+
 const State = preload("../../src/states/State.gd")
 const StateMachine = preload("../../src/states/StateMachine.gd")
 
-signal name_edit_entered(new_name) # Emits when focused exit or Enter pressed
+signal name_edit_entered(new_name: String)
 
-@onready var name_edit = $MarginContainer/NameEdit
+@onready var name_edit: LineEdit = $MarginContainer/NameEdit
 
-var undo_redo
-
-var state:
+var undo_redo: EditorUndoRedoManager
+var state: State:
 	set = set_state
 
 
-func _init():
+func _init() -> void:
 	super._init()
-	
 	set_state(State.new())
 
-func _ready():
+func _ready() -> void:
 	name_edit.focus_exited.connect(_on_NameEdit_focus_exited)
 	name_edit.text_submitted.connect(_on_NameEdit_text_submitted)
-	set_process_input(false) # _input only required when name_edit enabled to check mouse click outside
+	set_process_input(false)
 
-func _draw():
+
+func _draw() -> void:
 	if state is StateMachine:
 		if selected:
 			draw_style_box(get_theme_stylebox("nested_focus", "StateNode"), Rect2(Vector2.ZERO, size))
@@ -32,16 +33,17 @@ func _draw():
 	else:
 		super._draw()
 
-func _input(event):
+
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.pressed:
-			# Detect click outside rect
 			if get_viewport().gui_get_focus_owner() == name_edit:
-				var local_event = make_input_local(event)
+				var local_event: InputEvent = make_input_local(event)
 				if not name_edit.get_rect().has_point(local_event.position):
 					name_edit.release_focus()
 
-func enable_name_edit(v):
+
+func enable_name_edit(v: bool) -> void:
 	if v:
 		set_process_input(true)
 		name_edit.editable = true
@@ -57,26 +59,31 @@ func enable_name_edit(v):
 		mouse_default_cursor_shape = CURSOR_ARROW
 		name_edit.release_focus()
 
-func _on_state_name_changed(new_name):
-	name_edit.text = new_name
-	size.x = 0 # Force reset horizontal size
 
-func _on_state_changed(new_state):
+func _on_state_name_changed(new_name: String) -> void:
+	name_edit.text = new_name
+	size.x = 0
+
+
+func _on_state_changed(new_state: State) -> void:
 	if state:
 		state.name_changed.connect(_on_state_name_changed)
 		if name_edit:
 			name_edit.text = state.name
 
-func _on_NameEdit_focus_exited():
+
+func _on_NameEdit_focus_exited() -> void:
 	enable_name_edit(false)
 	name_edit.deselect()
 	emit_signal("name_edit_entered", name_edit.text)
 
-func _on_NameEdit_text_submitted(new_text):
+
+func _on_NameEdit_text_submitted(new_text: String) -> void:
 	enable_name_edit(false)
 	emit_signal("name_edit_entered", new_text)
 
-func set_state(s):
+
+func set_state(s: State) -> void:
 	if state != s:
 		state = s
 		_on_state_changed(s)
