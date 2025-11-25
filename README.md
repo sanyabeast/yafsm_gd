@@ -1,194 +1,119 @@
-# ![gd-YAFSM icon](icon.png)gd-YAFSM (**g**o**d**ot-**Y**et **A**nother **F**inite **S**tate **M**achine)
+# gd-YAFSM (Fork)
 
-Designer-friendly Finite State Machine implemented in "Godotic" way
+**Original Author:** [imjp94](https://github.com/imjp94/gd-YAFSM)  
+**Fork Maintainer:** [@sanyabeast](https://github.com/sanyabeast)
 
-> This version is only compatible with **Godot 4.x**, check out [godot3](https://github.com/imjp94/gd-YAFSM/tree/godot3) branch for older version
+This is a fork of gd-YAFSM with additional features and enhancements.
 
-## Content
+## Fork Enhancements
 
-- [Feature](#feature)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-  - [Editor](#editor)
-  - [Code](#code)
-- [Nested FSM](#nested-fsm)
-  - [State](#state)
-  - [Parameter](#parameter)
-- [Debug](#debug)
-- [Demo](https://github.com/imjp94/gd-yafsm-demo)
-- [Documentation](addons/imjp94.yafsm/README.md)
+### Auto-Trigger Feature
 
-## Feature
+Transitions can now use the target state name as an implicit trigger, reducing redundant trigger definitions.
 
-- Designer-friendly
+**How to use:**
+1. Select a transition in the state machine editor
+2. Check the **"Auto-Trigger"** checkbox in the transition inspector
+3. The transition will now trigger when you call `set_trigger(target_state_name)`
 
-  ![Editor Showcase](screenshots/yafsm_editor_showcase.gif)
-  > Design `StateMachine` in a flowchart-like editor
-- Remote Debug
-
-  ![Remote Debug Showcase](screenshots/yafsm_remote_debug_showcase.gif)
-  > Visualize flow of `StateMachine` & inspect parameters in realtime
-- Self-explanatory
-
-  ![Sample State Machine](screenshots/yafsm_sample_fsm.png)
-  > Visualize game/UI state from flowchart
-- Zero learning curve
-  > Similar workflow as using `AnimationTree`, and not required to inherit any custom class, just plug and play
-- Nested FSM
-  > Nested Finite State Machine workflow supported to create complex state machine with ease
-- Reusability
-  > As a `Resource`, `StateMachine` can be used repeatedly in different scenarios(`StateMachinePlayer`) and provide different outcome based on the input.
-- Minimal
-  > Compact data structure for `StateMachine` resource file
-
-For more detail, see [CHANGELOG.md](CHANGELOG.md)
-
-## Installation
-
-1. Install directly from Godot Asset Library
-
-or
-
-1. Download this respository, move `addons/imjp94.yafsm` to your `{project_dir}`
-
-2. Enable it from Project -> Settings -> Plugins
-
-or
-
-1. Install with [gd-plug](https://github.com/imjp94/gd-plug)
-
+**Example:**
 ```gdscript
-plug("imjp94/gd-YAFSM")
+# Transition: Idle -> Jump with Auto-Trigger enabled
+player.set_trigger("Jump")  # Uses target state name as trigger
 ```
 
-## Getting Started
+**Visual Feedback:**
+- When Auto-Trigger is enabled, a blue label **"→ [StateName]"** appears on the transition arrow
+- The label updates instantly when toggling the checkbox
+- Works alongside regular conditions
 
-### Editor
+**Benefits:**
+- More intuitive API (trigger name matches target state)
+- Cleaner state machine graphs
+- Less manual trigger condition creation
 
-![Getting Started](screenshots/yafsm_getting_started.gif)
+---
 
-1. Add ![StateMachinePlayer icon](addons/imjp94.yafsm/assets/icons/state_machine_player_icon.png)`StateMachinePlayer` node from "Create New Node" window.
+# Documentation
 
-2. Select created node and the state machine editor should shows up.
+## Classes
 
-3. Click on "Create StateMachine" button to get started.
-
-Finally, `Right-Click` on graph to add state node and `Shift + Drag` on node to start connect(`Shift + Drag` again on line to reconnect)
-
-Special states:
-
-- Entry: Entry point of a `StateMachine`, always required
-- Exit: `State` that break the flow of `StateMachine`, unless restarted with `StateMachinePlayer.restart()`, mainly used in nested-`StateMachine`.
-
-### Code
-
-After setup `StateMachine` with editor, you can connect to the following signals from a `StateMachinePlayer`:
-
-- `transited(from, to)`: Transition of state
-- `updated(state, delta)`: Time to update(defined by `process_mode`), up to user to handle anything, for example, update movement of `KinematicBody`
-
-![Signal Example](screenshots/yafsm_state_machine_player_signal_example.png)
-*Example code snippet of KinematicBody connect "updated" signal*
-
-And control `StateMachinePlayer` by accessing parameter:
+All of the class are located in `res://addons/yafsm/src` but you can just preload `res://addons/yafsm/YAFSM.gd` to import all class available:
 
 ```gdscript
-var smp = get_node("StateMachinePlayer")
-smp.set_trigger("jump")
-smp.set_param("jump_count", 1)
-smp.get_param("on_floor", false)
-smp.has_param("velocity")
+const YAFSM = preload("res://addons/yafsm/YAFSM.gd")
+const StackPlayer = YAFSM.StackPlayer
+const StateMachinePlayer = YAFSM.StateMachinePlayer
+const StateMachine = YAFSM.StateMachine
+const State = YAFSM.State
 ```
 
-That's it!
+### Node
 
-For most of the case, you don't have to inherit from any custom class by this plugin, simply just connect signals to your existing node and you're good to go.
+- [StackPlayer](src/StackPlayer.gd) ![StackPlayer icon](assets/icons/stack_player_icon.png)
+  > Manage stack of item, use push/pop function to set current item on top of stack
+  - `current # Current item on top of stack`
+  - `stack`
+  - signals:
+    - `pushed(to) # When item pushed to stack`
+    - `popped(from) # When item popped from stack`
+- [StateMachinePlayer](src/StateMachinePlayer.gd)(extends StackPlayer) ![StateMachinePlayer icon](assets/icons/state_machine_player_icon.png)
+  > Manage state based on `StateMachine` and parameters inputted
+  - `state_machine # StateMachine being played`
+  - `active # Activeness of player`
+  - `autostart # Automatically enter Entry state on ready if true`
+  - `process_mode # ProcessMode of player`
+  - signals:
+    - `transited(from, to) # Transition of state`
+    - `entered(to) # Entry of state machine(including nested), empty string equals to root`
+    - `exited(from) # Exit of state machine(including nested, empty string equals to root`
+    - `updated(state, delta) # Time to update(based on process_mode), up to user to handle any logic, for example, update movement of KinematicBody`
 
-> See [documentation](addons/imjp94.yafsm/README.md) for more details
+### Control
 
-## Nested FSM
+- [StackPlayerDebugger](src/debugger/StackPlayerDebugger.gd)
+  > Visualize stack of parent StackPlayer on screen
 
-The only different between nested/normal FSM is how state/parameters are accessed.
+### Reference
 
-### State
+- [StateDirectory](src/StateDirectory.gd)
+  > Convert state path to directory object for traversal, mainly used for nested state
 
-- normal state - "State"
-- nested state - "BaseState/AnotherState/EndState"
+### Resource
+
+Relationship between all `Resource`s can be best represented as below:
 
 ```gdscript
-var normal_state = "Idle"
-var nested_state = "App/Game/Play" # EndState can be Entry/Exit
+var state_machine = state_machine_player.state_machine
+var state = state_machine.states[state_name] # keyed by state name
+var transition = state_machine.transitions[from][to] # keyed by state name transition from/to
+var condition = transition.conditions[condition_name] # keyed by condition name
 ```
 
-`StateDirectory` class is provided to traverse state path like file directory:
+> For normal usage, you really don't have to access any `Resource` during runtime as they only store static data that describe the state machine, accessing `StackPlayer`/`StateMachinePlayer` alone should be sufficient.
 
-```gdscript
-const StateDirectory = preload("addons/imjp94.yafsm/src/StateDirectory.gd")
-
-# Handle "transited" signal
-func _on_normal_state_transited(from, to):
-	match to:
-		"Entry":
-			print("Enter")
-		"Game":
-			print("Game")
-		"Exit":
-			print("Exit")
-
-# Handle "transited" signal
-func _on_nested_state_transited(from, to):
-	var to_dir = StateDirectory.new(to)
-
-	match to_dir.next(): # Initial next() required to move to base state
-		"Entry":
-			print("Enter")
-		"Game":
-			match to_dir.next(): # It can be called recursively, until return null
-				"Entry":
-					print("Game Enter") # Game/Entry
-		"Exit":
-			print("Exit")
-```
-
-### Parameter
-
-Behind the scene, `StateMachinePlayer` always differentiate parameters into 2 types: global & local
-
-- global parameter
-  - Just a normal parameter - "param_name"
-  - Never erased automatically, unless `erase_param`/`clear_param` called by user
-- local parameter 
-  - Parameter that local to nested state - "BaseState/TargetState/param_name"
-  - Erased upon Exit, for example, "App/Game/Exit" will cause all local parameter("App/Game/{param_name}") to be erased
-
-```gdscript
-var smp = get_node("StateMachinePlayer")
-var global_param = smp.get_param("state")
-var local_param = smp.get_param("App/Game/playing")
-local_param = smp.get_nested_param("App/Game", "playing")
-smp.set_param("App/Game/End/victory", true)
-smp.set_nested_param("App/Game", "paused", true)
-```
-
-Besides of controlling `StateMachinePlayer`, it's useful to set arbitrary value with `set_param`
-
-```gdscript
-var smp = get_node("StateMachinePlayer")
-smp.set_param("game", preload("game.scn"))
-var game_scn = smp.get_param("game")
-```
-
-### Debug
-
-- Editor
-  > When playing scene, select `StateMachinePlayer` node in remote scene tree to view flow of `StateMachine` in realtime
-- In-game
-  > Add `res://addons/imjp94.yafsm/src/debugger/StackPlayerDebugger.tscn` to `StackPlayer`(so as `StateMachinePlayer`) to visualize the stack on screen.
-  
-## Demo
-
-Check out [gd-YAFSM-demo](https://github.com/imjp94/gd-yafsm-demo) for how you can integrate gd-YAFSM into you project and manage app state with `StateMachine`
-
-## Documentation
-
-Refer to [Documentation](addons/imjp94.yafsm/README.md) located in addons/imjp94.yafsm/README.md
+- [State](src/states/State.gd)
+  > Resource that represent a state
+  - `name`
+- [StateMachine](src/states/StateMachine.gd)(`extends State`) ![StateMachine icon](assets/icons/state_machine_icon.png)
+  > `StateMachine` is also a `State`, but mainly used as container of `State`s and `Transitions`s
+  - `states`
+  - `transitions`
+- [Transition](src/transitions/Transition.gd)
+  > Describing connection from one state to another, all conditions must be fulfilled to transit to next state
+  - `from`
+  - `to`
+  - `conditions`
+  - `priority` - Higher priority transitions are evaluated first
+  - `use_target_as_trigger` - When enabled, uses target state name as implicit trigger
+- [Condition](src/conditions/Condition.gd)
+  > Empty condition with just a name, treated as trigger
+  - `name`
+- [ValueCondition](src/conditions/ValueCondition.gd)(`extends Condition`)
+  > Condition with value, fulfilled by comparing values based on comparation
+  - `comparation`
+  - `value`
+- [BooleanCondition](src/conditions/BooleanCondition.gd)(`extends ValueCondition`)
+- [IntegerCondition](src/conditions/IntegerCondition.gd)(`extends ValueCondition`)
+- [FloatCondition](src/conditions/FloatCondition.gd)(`extends ValueCondition`)
+- [StringCondition](src/conditions/StringCondition.gd)(`extends ValueCondition`)
