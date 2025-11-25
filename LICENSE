@@ -20,14 +20,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This is a fork of gd-YAFSM (https://github.com/imjp94/gd-YAFSM)
-Original author: Tan Jian Ping (imjp94)
-Fork maintainer: @sanyabeast
-
-Fork enhancements:
-- Auto-Trigger feature for transitions
-- Visual feedback improvements
-- Additional quality of life improvements
