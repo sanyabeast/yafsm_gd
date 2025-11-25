@@ -2,14 +2,14 @@
 extends Control
 
 
-const Utils = preload("res://addons/yafsm/scripts/Utils.gd")
+const Utils = preload("res://addons/yafsm/scripts/utils.gd")
 const CohenSutherland = Utils.CohenSutherland
-const FlowChartNode = preload("FlowChartNode.gd")
-const FlowChartNodeScene = preload("FlowChartNode.tscn")
-const FlowChartLine = preload("FlowChartLine.gd")
-const FlowChartLineScene = preload("FlowChartLine.tscn")
-const FlowChartLayer = preload("FlowChartLayer.gd")
-const FlowChartGrid = preload("FlowChartGrid.gd")
+const FlowChartNode = preload("flowchart_node.gd")
+const FlowChartNodeScene = preload("flowchart_node.tscn")
+const FlowChartLine = preload("flowchart_line.gd")
+const FlowChartLineScene = preload("flowchart_line.tscn")
+const FlowChartLayer = preload("flowchart_layer.gd")
+const FlowChartGrid = preload("flowchart_grid.gd")
 const Connection = FlowChartLayer.Connection
 
 signal connection(from: String, to: String, line: Control)

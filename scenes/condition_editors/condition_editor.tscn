@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cie8lb6ww58ck"]
 
-[ext_resource type="Script" path="res://addons/yafsm/scenes/condition_editors/ConditionEditor.gd" id="1"]
+[ext_resource type="Script" uid="uid://bundt15jejvkt" path="res://addons/yafsm/scenes/condition_editors/condition_editor.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://l78bjwo7shm" path="res://addons/yafsm/assets/icons/close-white-18dp.svg" id="2"]
 
 [node name="ConditionEditor" type="HBoxContainer"]

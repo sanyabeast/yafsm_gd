@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bar1eob74t82f"]
 
-[ext_resource type="Script" path="res://addons/yafsm/scenes/flowchart/FlowChartNode.gd" id="1"]
+[ext_resource type="Script" uid="uid://8e1dedyqsms8" path="res://addons/yafsm/scenes/flowchart/flowchart_node.gd" id="1"]
 
 [sub_resource type="StyleBoxFlat" id="1"]
 bg_color = Color(0.164706, 0.164706, 0.164706, 1)

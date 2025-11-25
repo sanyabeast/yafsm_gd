@@ -2,8 +2,8 @@
 extends EditorInspectorPlugin
 
 
-const Transition = preload("res://addons/yafsm/src/transitions/Transition.gd")
-const TransitionEditor = preload("res://addons/yafsm/scenes/transition_editors/TransitionEditor.tscn")
+const Transition = preload("res://addons/yafsm/src/transitions/transition.gd")
+const TransitionEditor = preload("res://addons/yafsm/scenes/transition_editors/transition_editor.tscn")
 
 var undo_redo: EditorUndoRedoManager
 var transition_icon: Texture2D

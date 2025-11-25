@@ -50,14 +50,14 @@ const State = YAFSM.State
 
 ### Node
 
-- [StackPlayer](src/StackPlayer.gd) ![StackPlayer icon](assets/icons/stack_player_icon.png)
+- [StackPlayer](src/stack_player.gdd) ![StackPlayer icon](assets/icons/stack_player_icon.png)
   > Manage stack of item, use push/pop function to set current item on top of stack
   - `current # Current item on top of stack`
   - `stack`
   - signals:
     - `pushed(to) # When item pushed to stack`
     - `popped(from) # When item popped from stack`
-- [StateMachinePlayer](src/StateMachinePlayer.gd)(extends StackPlayer) ![StateMachinePlayer icon](assets/icons/state_machine_player_icon.png)
+- [StateMachinePlayer](src/state_machine_player.gd)(extends StackPlayer) ![StateMachinePlayer icon](assets/icons/state_machine_player_icon.png)
   > Manage state based on `StateMachine` and parameters inputted
   - `state_machine # StateMachine being played`
   - `active # Activeness of player`
@@ -76,7 +76,7 @@ const State = YAFSM.State
 
 ### Reference
 
-- [StateDirectory](src/StateDirectory.gd)
+- [StateDirectory](src/state_directory.gd)
   > Convert state path to directory object for traversal, mainly used for nested state
 
 ### Resource
@@ -92,28 +92,28 @@ var condition = transition.conditions[condition_name] # keyed by condition name
 
 > For normal usage, you really don't have to access any `Resource` during runtime as they only store static data that describe the state machine, accessing `StackPlayer`/`StateMachinePlayer` alone should be sufficient.
 
-- [State](src/states/State.gd)
+- [State](src/states/state.gd)
   > Resource that represent a state
   - `name`
-- [StateMachine](src/states/StateMachine.gd)(`extends State`) ![StateMachine icon](assets/icons/state_machine_icon.png)
+- [StateMachine](src/states/state_machine.gd)(`extends State`) ![StateMachine icon](assets/icons/state_machine_icon.png)
   > `StateMachine` is also a `State`, but mainly used as container of `State`s and `Transitions`s
   - `states`
   - `transitions`
-- [Transition](src/transitions/Transition.gd)
+- [Transition](src/transitions/transition.gd)
   > Describing connection from one state to another, all conditions must be fulfilled to transit to next state
   - `from`
   - `to`
   - `conditions`
   - `priority` - Higher priority transitions are evaluated first
   - `use_target_as_trigger` - When enabled, uses target state name as implicit trigger
-- [Condition](src/conditions/Condition.gd)
+- [Condition](src/conditions/condition.gd)
   > Empty condition with just a name, treated as trigger
   - `name`
-- [ValueCondition](src/conditions/ValueCondition.gd)(`extends Condition`)
+- [ValueCondition](src/conditions/value_condition.gd)(`extends Condition`)
   > Condition with value, fulfilled by comparing values based on comparation
   - `comparation`
   - `value`
-- [BooleanCondition](src/conditions/BooleanCondition.gd)(`extends ValueCondition`)
-- [IntegerCondition](src/conditions/IntegerCondition.gd)(`extends ValueCondition`)
-- [FloatCondition](src/conditions/FloatCondition.gd)(`extends ValueCondition`)
-- [StringCondition](src/conditions/StringCondition.gd)(`extends ValueCondition`)
+- [BooleanCondition](src/conditions/boolean_condition.gd)(`extends ValueCondition`)
+- [IntegerCondition](src/conditions/integer_condition.gd)(`extends ValueCondition`)
+- [FloatCondition](src/conditions/float_condition.gd)(`extends ValueCondition`)
+- [StringCondition](src/conditions/string_condition.gd)(`extends ValueCondition`)

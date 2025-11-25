@@ -1,9 +1,9 @@
 @tool
-extends "res://addons/yafsm/scenes/flowchart/FlowChartNode.gd"
+extends "res://addons/yafsm/scenes/flowchart/flowchart_node.gd"
 
 
-const State = preload("../../src/states/State.gd")
-const StateMachine = preload("../../src/states/StateMachine.gd")
+const State = preload("../../src/states/state.gd")
+const StateMachine = preload("../../src/states/state_machine.gd")
 
 signal name_edit_entered(new_name: String)
 

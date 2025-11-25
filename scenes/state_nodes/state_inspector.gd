@@ -1,7 +1,7 @@
 extends EditorInspectorPlugin
 
 
-const State = preload("res://addons/yafsm/src/states/State.gd")
+const State = preload("res://addons/yafsm/src/states/state.gd")
 
 
 func _can_handle(object: Object) -> bool:

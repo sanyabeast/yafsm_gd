@@ -2,8 +2,8 @@
 extends Control
 
 
-const StackPlayer = preload("../StackPlayer.gd")
-const StackItem = preload("StackItem.tscn")
+const StackPlayer = preload("../stack_player.gd")
+const StackItem = preload("stack_item.tscn")
 
 @onready var Stack: VBoxContainer = $MarginContainer/Stack
 

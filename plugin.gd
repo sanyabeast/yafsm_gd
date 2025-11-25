@@ -2,9 +2,9 @@
 extends EditorPlugin
 
 
-const StateMachineEditor = preload("scenes/StateMachineEditor.tscn")
-const TransitionInspector = preload("scenes/transition_editors/TransitionInspector.gd")
-const StateInspector = preload("scenes/state_nodes/StateInspector.gd")
+const StateMachineEditor = preload("scenes/state_machine_editor.tscn")
+const TransitionInspector = preload("scenes/transition_editors/transition_inspector.gd")
+const StateInspector = preload("scenes/state_nodes/state_inspector.gd")
 const StackPlayerIcon = preload("assets/icons/stack_player_icon.png")
 const StateMachinePlayerIcon = preload("assets/icons/state_machine_player_icon.png")
 
@@ -113,7 +113,7 @@ func _on_focused_object_changed(new_obj: Variant) -> void:
 			if focused_object.get_class() == "EditorDebuggerRemoteObjects":
 				state_machine = focused_object.get("Members/state_machine")
 				if state_machine == null:
-					state_machine = focused_object.get("Members/StateMachinePlayer.gd/state_machine")
+					state_machine = focused_object.get("Members/state_machine_player.gd/state_machine")
 			else:
 				state_machine = focused_object.state_machine
 			state_machine_editor.state_machine_player = focused_object

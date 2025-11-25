@@ -1,5 +1,5 @@
 @tool
-extends "res://addons/yafsm/scenes/condition_editors/ValueConditionEditor.gd"
+extends "res://addons/yafsm/scenes/condition_editors/value_condition_editor.gd"
 
 
 @onready var string_value: LineEdit = $MarginContainer/StringValue

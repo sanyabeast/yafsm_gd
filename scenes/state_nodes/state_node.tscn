@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://l3mqbqjwjkc3"]
 
-[ext_resource type="Script" path="res://addons/yafsm/scenes/state_nodes/StateNode.gd" id="2"]
+[ext_resource type="Script" uid="uid://dj3divi0wxkea" path="res://addons/yafsm/scenes/state_nodes/state_node.gd" id="2"]
 [ext_resource type="SystemFont" uid="uid://dmcxm8gxsonbq" path="res://addons/yafsm/assets/fonts/sans_serif.tres" id="2_352m3"]
 
 [sub_resource type="StyleBoxFlat" id="1"]

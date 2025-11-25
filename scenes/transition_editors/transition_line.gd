@@ -1,9 +1,9 @@
 @tool
-extends "res://addons/yafsm/scenes/flowchart/FlowChartLine.gd"
+extends "res://addons/yafsm/scenes/flowchart/flowchart_line.gd"
 
 
-const Transition = preload("../../src/transitions/Transition.gd")
-const ValueCondition = preload("../../src/conditions/ValueCondition.gd")
+const Transition = preload("../../src/transitions/transition.gd")
+const ValueCondition = preload("../../src/conditions/value_condition.gd")
 const hi_res_font: Font = preload("res://addons/yafsm/assets/fonts/sans_serif.tres")
 
 @export var upright_angle_range: float = 5.0

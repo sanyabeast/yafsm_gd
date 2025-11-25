@@ -1,5 +1,5 @@
 @tool
-extends "ValueConditionEditor.gd"
+extends "value_condition_editor.gd"
 
 
 @onready var integer_value: LineEdit = $MarginContainer/IntegerValue

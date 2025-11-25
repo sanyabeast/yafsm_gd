@@ -2,7 +2,7 @@
 extends Control
 
 
-const FlowChartNode = preload("res://addons/yafsm/scenes/flowchart/FlowChartNode.gd")
+const FlowChartNode = preload("res://addons/yafsm/scenes/flowchart/flowchart_node.gd")
 
 var content_lines: Control = Control.new()
 var content_nodes: Control = Control.new()

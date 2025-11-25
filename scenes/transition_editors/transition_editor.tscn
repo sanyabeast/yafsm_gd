@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dw0ecw2wdeosi"]
 
 [ext_resource type="Texture2D" uid="uid://dg8cmn5ubq6r5" path="res://addons/yafsm/assets/icons/add-white-18dp.svg" id="1"]
-[ext_resource type="Script" path="res://addons/yafsm/scenes/transition_editors/TransitionEditor.gd" id="3"]
+[ext_resource type="Script" uid="uid://k74vxwkiptto" path="res://addons/yafsm/scenes/transition_editors/transition_editor.gd" id="3"]
 
 [sub_resource type="Gradient" id="Gradient_hw7k8"]
 offsets = PackedFloat32Array(1)

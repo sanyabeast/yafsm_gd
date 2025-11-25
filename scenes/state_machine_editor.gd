@@ -1,16 +1,16 @@
 @tool
-extends "res://addons/yafsm/scenes/flowchart/FlowChart.gd"
+extends "res://addons/yafsm/scenes/flowchart/flowchart.gd"
 
 
-const StateMachine = preload("../src/states/StateMachine.gd")
-const Transition = preload("../src/transitions/Transition.gd")
-const State = preload("../src/states/State.gd")
-const StateDirectory = preload("../src/StateDirectory.gd")
-const StateNode = preload("state_nodes/StateNode.tscn")
-const TransitionLine = preload("transition_editors/TransitionLine.tscn")
-const StateNodeScript = preload("state_nodes/StateNode.gd")
-const StateMachineEditorLayer = preload("StateMachineEditorLayer.gd")
-const PathViewer = preload("PathViewer.gd")
+const StateMachine = preload("../src/states/state_machine.gd")
+const Transition = preload("../src/transitions/transition.gd")
+const State = preload("../src/states/state.gd")
+const StateDirectory = preload("../src/state_directory.gd")
+const StateNode = preload("state_nodes/state_node.tscn")
+const TransitionLine = preload("transition_editors/transition_line.tscn")
+const StateNodeScript = preload("state_nodes/state_node.gd")
+const StateMachineEditorLayer = preload("state_machine_editor_layer.gd")
+const PathViewer = preload("path_viewer.gd")
 
 signal inspector_changed(property: String)
 signal debug_mode_changed(new_debug_mode: bool)
@@ -108,14 +108,14 @@ func _process(delta: float) -> void:
 		set_process(false)
 		set_debug_mode(false)
 		return
-	var stack: Variant = state_machine_player.get("Members/StackPlayer.gd/stack")
+	var stack: Variant = state_machine_player.get("Members/stack_player.gdd/stack")
 	if ((stack == []) or (stack==null)):
 		set_process(false)
 		set_debug_mode(false)
 		return
 
 	if stack.size() == 1:
-		set_current_state(state_machine_player.get("Members/StackPlayer.gd/current"))
+		set_current_state(state_machine_player.get("Members/stack_player.gdd/current"))
 	else:
 		var stack_max_index: int = stack.size() - 1
 		var prev_index: int = stack.find(_current_state)
@@ -145,8 +145,8 @@ func _process(delta: float) -> void:
 	var params: Variant = state_machine_player.get("Members/_parameters")
 	var local_params: Variant = state_machine_player.get("Members/_local_parameters")
 	if params == null:
-		params = state_machine_player.get("Members/StateMachinePlayer.gd/_parameters")
-		local_params = state_machine_player.get("Members/StateMachinePlayer.gd/_local_parameters")
+		params = state_machine_player.get("Members/state_machine_player.gd/_parameters")
+		local_params = state_machine_player.get("Members/state_machine_player.gd/_local_parameters")
 	param_panel.update_params(params, local_params)
 	get_focused_layer(_current_state).debug_update(_current_state, params, local_params)
 

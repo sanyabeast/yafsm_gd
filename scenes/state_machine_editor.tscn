@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bp2f3rs2sgn8g"]
 
-[ext_resource type="PackedScene" uid="uid://ccv81pntbud75" path="res://addons/yafsm/scenes/StateNodeContextMenu.tscn" id="1"]
-[ext_resource type="Script" path="res://addons/yafsm/scenes/StateMachineEditor.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://cflltb00e10be" path="res://addons/yafsm/scenes/ContextMenu.tscn" id="3"]
-[ext_resource type="Script" path="res://addons/yafsm/scenes/ParametersPanel.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://ccv81pntbud75" path="res://addons/yafsm/scenes/state_node_context_menu.tscn" id="1"]
+[ext_resource type="Script" uid="uid://7nmhsx8qfuun" path="res://addons/yafsm/scenes/state_machine_editor.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://cflltb00e10be" path="res://addons/yafsm/scenes/context_menu.tscn" id="3"]
+[ext_resource type="Script" uid="uid://cmu2gsvv8pf6n" path="res://addons/yafsm/scenes/parameters_panel.gd" id="4"]
 
 [node name="StateMachineEditor" type="Control"]
 visible = false

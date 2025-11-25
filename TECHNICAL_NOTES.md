@@ -3,30 +3,30 @@
 ## Project Structure
 
 ### Core Resources (`src/`)
-- **StateMachine.gd** - Main state machine resource, manages states and transitions
-- **StateMachinePlayer.gd** - Runtime player node, executes state machine logic
-- **State.gd** - Base state resource
-- **Transition.gd** - Transition resource with conditions and priority
-- **Condition.gd** - Base condition class
-- **ValueCondition.gd** - Condition with comparison operators (==, !=, <, >, etc.)
-- **StackPlayer.gd** - Stack-based state history manager
-- **StateDirectory.gd** - Path utilities for nested states
+- **state_machine.gd** - Main state machine resource, manages states and transitions
+- **state_machine_player.gd** - Runtime player node, executes state machine logic
+- **state.gd** - Base state resource
+- **transition.gd** - Transition resource with conditions and priority
+- **condition.gd** - Base condition class
+- **value_condition.gd** - Condition with comparison operators (==, !=, <, >, etc.)
+- **stack_player.gdd** - Stack-based state history manager
+- **state_directory.gd** - Path utilities for nested states
 
 ### Condition Types (`src/conditions/`)
 - BooleanCondition, IntegerCondition, FloatCondition, StringCondition
 - All extend ValueCondition with typed value property
 
 ### Editor UI (`scenes/`)
-- **StateMachineEditor.tscn/.gd** - Main editor interface
-- **FlowChart.gd** - Visual graph editor base
-- **FlowChartLayer.gd** - Manages nodes and connections
-- **StateMachineEditorLayer.gd** - State machine specific layer with debug visualization
-- **StateNode.gd** - Visual state representation
+- **state_machine_editor.tscn/.gd** - Main editor interface
+- **flowchart.gd** - Visual graph editor base
+- **flowchart_layer.gd** - Manages nodes and connections
+- **state_machine_editor_layer.gd** - State machine specific layer with debug visualization
+- **state_node.gd** - Visual state representation
 - **TransitionLine.gd** - Visual transition arrow with condition labels
 - **TransitionEditor.gd** - Inspector panel for transitions
 
 ### Utilities
-- **Utils.gd** - Popup positioning, color utilities, line clipping (Cohen-Sutherland)
+- **utils.gd** - Popup positioning, color utilities, line clipping (Cohen-Sutherland)
 - **plugin.gd** - Editor plugin registration
 
 ## Key Concepts

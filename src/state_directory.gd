@@ -2,7 +2,7 @@
 extends RefCounted
 
 
-const State = preload("states/State.gd")
+const State = preload("states/state.gd")
 
 var path: String
 var current: String:

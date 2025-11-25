@@ -2,12 +2,12 @@
 extends VBoxContainer
 
 
-const Utils = preload("../../scripts/Utils.gd")
-const ConditionEditor = preload("../condition_editors/ConditionEditor.tscn")
-const BoolConditionEditor = preload("../condition_editors/BoolConditionEditor.tscn")
-const IntegerConditionEditor = preload("../condition_editors/IntegerConditionEditor.tscn")
-const FloatConditionEditor = preload("../condition_editors/FloatConditionEditor.tscn")
-const StringConditionEditor = preload("../condition_editors/StringConditionEditor.tscn")
+const Utils = preload("../../scripts/utils.gd")
+const ConditionEditor = preload("../condition_editors/condition_editor.tscn")
+const BoolConditionEditor = preload("../condition_editors/bool_condition_editor.tscn")
+const IntegerConditionEditor = preload("../condition_editors/integer_condition_editor.tscn")
+const FloatConditionEditor = preload("../condition_editors/float_condition_editor.tscn")
+const StringConditionEditor = preload("../condition_editors/string_condition_editor.tscn")
 
 @onready var header: Control = $HeaderContainer/Header
 @onready var title: Control = $HeaderContainer/Header/Title

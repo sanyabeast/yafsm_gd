@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/yafsm/src/debugger/StackPlayerDebugger.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://d1q00op56kdft" path="res://addons/yafsm/src/debugger/stack_player_debugger.gd" id="1"]
 
 [node name="StackPlayerDebugger" type="Control"]
 modulate = Color( 1, 1, 1, 0.498039 )

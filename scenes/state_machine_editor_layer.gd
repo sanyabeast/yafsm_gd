@@ -1,11 +1,11 @@
 @tool
-extends "res://addons/yafsm/scenes/flowchart/FlowChartLayer.gd"
+extends "res://addons/yafsm/scenes/flowchart/flowchart_layer.gd"
 
 
-const Utils = preload("res://addons/yafsm/scripts/Utils.gd")
-const StateNode = preload("res://addons/yafsm/scenes/state_nodes/StateNode.tscn")
-const StateNodeScript = preload("res://addons/yafsm/scenes/state_nodes/StateNode.gd")
-const StateDirectory = preload("../src/StateDirectory.gd")
+const Utils = preload("res://addons/yafsm/scripts/utils.gd")
+const StateNode = preload("res://addons/yafsm/scenes/state_nodes/state_node.tscn")
+const StateNodeScript = preload("res://addons/yafsm/scenes/state_nodes/state_node.gd")
+const StateDirectory = preload("../src/state_directory.gd")
 
 var editor_accent_color: Color = Color.WHITE:
 	set = set_editor_accent_color

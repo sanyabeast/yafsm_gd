@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bmpwx6h3ckekr"]
 
-[ext_resource type="PackedScene" uid="uid://blnscdhcxvpmk" path="res://addons/yafsm/scenes/condition_editors/ValueConditionEditor.tscn" id="1"]
-[ext_resource type="Script" path="res://addons/yafsm/scenes/condition_editors/BoolConditionEditor.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://blnscdhcxvpmk" path="res://addons/yafsm/scenes/condition_editors/value_condition_editor.tscn" id="1"]
+[ext_resource type="Script" uid="uid://d3ueih44sv3mv" path="res://addons/yafsm/scenes/condition_editors/bool_condition_editor.gd" id="2"]
 
 [node name="BoolConditionEditor" instance=ExtResource("1")]
 script = ExtResource("2")
