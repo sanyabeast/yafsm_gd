@@ -347,6 +347,14 @@ func get_state_names() -> PackedStringArray:
 	return PackedStringArray()
 
 
+func has_transition(from: String, to: String) -> bool:
+	if state_machine:
+		var from_transitions: Variant = state_machine.transitions.get(from)
+		if from_transitions:
+			return to in from_transitions
+	return false
+
+
 static func node_path_to_state_path(node_path: String) -> String:
 	var p: String = node_path.replace("root", "")
 	if p.begins_with("/"):
