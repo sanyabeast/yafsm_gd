@@ -341,6 +341,12 @@ func get_previous() -> String:
 	return v if v else ""
 
 
+func get_state_names() -> PackedStringArray:
+	if state_machine:
+		return PackedStringArray(state_machine.states.keys())
+	return PackedStringArray()
+
+
 static func node_path_to_state_path(node_path: String) -> String:
 	var p: String = node_path.replace("root", "")
 	if p.begins_with("/"):
