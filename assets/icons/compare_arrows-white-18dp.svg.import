@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cnkaa2ky1f4jq"
-path="res://.godot/imported/compare_arrows-white-18dp.svg-7313ec3b54f05c948521b16e0efaaeed.ctex"
+path="res://.godot/imported/compare_arrows-white-18dp.svg-91bc0dae782ffd0f00f4ebc8ded336b1.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://addons/yafsm/assets/icons/compare_arrows-white-18dp.svg"
-dest_files=["res://.godot/imported/compare_arrows-white-18dp.svg-7313ec3b54f05c948521b16e0efaaeed.ctex"]
+dest_files=["res://.godot/imported/compare_arrows-white-18dp.svg-91bc0dae782ffd0f00f4ebc8ded336b1.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://quofx2t3tj1b"
-path="res://.godot/imported/state_machine_icon.png-9917b22df6299aea6994b92cacbcef16.ctex"
+path="res://.godot/imported/state_machine_icon.png-cc312f8982d5ac30de8849130f1df365.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://addons/yafsm/assets/icons/state_machine_icon.png"
-dest_files=["res://.godot/imported/state_machine_icon.png-9917b22df6299aea6994b92cacbcef16.ctex"]
+dest_files=["res://.godot/imported/state_machine_icon.png-cc312f8982d5ac30de8849130f1df365.ctex"]
 
 [params]
 

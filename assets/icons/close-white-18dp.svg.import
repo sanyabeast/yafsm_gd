@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://l78bjwo7shm"
-path="res://.godot/imported/close-white-18dp.svg-3d0e2341eb99a6dc45a6aecef969301b.ctex"
+path="res://.godot/imported/close-white-18dp.svg-cdbf3529770d44d0d612074d2000013a.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://addons/yafsm/assets/icons/close-white-18dp.svg"
-dest_files=["res://.godot/imported/close-white-18dp.svg-3d0e2341eb99a6dc45a6aecef969301b.ctex"]
+dest_files=["res://.godot/imported/close-white-18dp.svg-cdbf3529770d44d0d612074d2000013a.ctex"]
 
 [params]
 
